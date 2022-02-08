@@ -8,16 +8,7 @@ export default function Header() {
                 <Link href="/">
                   <a>LOGO</a>
                 </Link>
-            </div>
-            <nav>
-                <ul>
-                    <li>
-                        <Link href="/events">
-                          <a>Events</a>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>            
+            </div>   
         </header>
     )
 }

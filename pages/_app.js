@@ -1,11 +1,11 @@
-import '../styles/scss/globals.scss'
+import '../styles/scss/globals.scss';
 
-export function reportWebVitals(metric) {
+/* export function reportWebVitals(metric) {
   console.log(metric)
-}
+} */
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;
