@@ -4,6 +4,11 @@ import Link from 'next/link';
 import Layout from '@/components/Layout';
 import { API_URL } from '@/config/index';
 
+// Over here the path for the event page will be /events/event-name, while
+// the api route in stratify would be /events?slug={$slug}
+// as a query parameter. In next.js the api route /api/events/${slug} (given how the
+// folder structure is )
+
 export default function Eventpage({ evt }) {
   return (
     <Layout>
