@@ -17,6 +17,7 @@ export default function Layout({
         <meta name="keywords" content={keywords} />
       </Head>
       <Header />
+      {/* The showcase component is only show on the landing page */}
       { router.pathname === '/' && <Showcase />}
       <div className={styles.container}>
         { children }
