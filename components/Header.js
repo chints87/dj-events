@@ -9,8 +9,21 @@ export default function Header() {
         <Link href="/">
           <a>LOGO</a>
         </Link>
-        <Search />
       </div>
+      <Search />
+      <nav>
+        <ul>
+          <li>
+            <Link href="/events">
+              <a>Events</a>
+            </Link>
+            <Link href="/events/add">
+              <a>Add Event</a>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
     </header>
   );
 }
