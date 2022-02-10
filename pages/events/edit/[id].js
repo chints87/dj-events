@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { FaImage } from 'react-icons/fa';
 import moment from 'moment';
+import Image from 'next/image';
 import Layout from '@/components/Layout';
 import { API_URL } from '@/config/index';
 
@@ -15,6 +17,11 @@ export default function EditEventPage({ evt }) {
     time: evt.time,
     description: evt.description,
   });
+
+  // eslint-disable-next-line no-unused-vars
+  const [imagePreview, setImagePreview] = useState(
+    evt.Image ? evt.Image.formats.thumbnail.url : null,
+  );
 
   const router = useRouter();
 
@@ -74,7 +81,16 @@ export default function EditEventPage({ evt }) {
         </label>
         <input type="submit" value="Edit Event" />
       </form>
+      <h2>Event Image</h2>
+      { imagePreview
+        ? <Image src={imagePreview} height={100} width={100} alt="" /> : <p>No image uploaded</p> }
+      <div>
+        <button type="button">
+          <FaImage /> Set Image
+        </button>
+      </div>
     </Layout>
+
   );
 }
 
