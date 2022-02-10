@@ -7,7 +7,7 @@ export default function EventItem({ evt }) {
   return (
     <div style={{ display: 'flex' }}>
       <div>
-        <Image src={evt.Image ? evt.Image.formats.thumbnail.url : '/images/event-default.png' } alt={evt.name} width={170} height={100} />
+        <Image src={evt.Image ? evt.Image.formats.thumbnail.url : '/images/event-default.png'} alt={evt.name} width={170} height={100} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {evt.name}
