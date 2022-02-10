@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaPencilAlt, FaTimes } from 'react-icons/fa';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { API_URL } from '@/config/index';
 
@@ -10,6 +11,23 @@ import { API_URL } from '@/config/index';
 // folder structure is )
 
 export default function Eventpage({ evt }) {
+  const router = useRouter();
+  const deleteEvent = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Are you sure you want to delete?')) {
+      const res = await fetch(`${API_URL}/events/${evt.id}`, {
+        method: 'DELETE',
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error);
+      } else {
+        router.push('/events');
+      }
+    }
+  };
   return (
     <Layout>
       <h1>{evt.slug}</h1>
@@ -21,7 +39,7 @@ export default function Eventpage({ evt }) {
         </a>
       </Link>
       <Link href="#">
-        <a>
+        <a onClick={deleteEvent} role="presentation">
           <FaTimes />
           {' '}
           Delete
