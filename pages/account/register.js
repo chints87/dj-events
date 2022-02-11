@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaUser } from 'react-icons/fa';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
+import AuthContext from '@/context/AuthContext';
 
-export default function Login() {
+export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const { register , error } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+    // console.log('in here');
+    register({ username, email, password });
   };
   return (
     <Layout title="User Login">
@@ -23,7 +26,7 @@ export default function Login() {
           <div>
             <label htmlFor="username">
               Username
-              <input type="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
             </label>
           </div>
           <div>
@@ -42,11 +45,11 @@ export default function Login() {
           <div>
             <label htmlFor="confirmPassword">
               confirmPassword
-              <input type="confirmPassword" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <input type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </label>
           </div>
+          <input type="submit" value="Register" />
         </form>
-        <input type="submit" value="Register" />
         <p>
           Already have an account
           {' '}
