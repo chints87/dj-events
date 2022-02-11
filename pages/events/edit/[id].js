@@ -4,6 +4,7 @@ import { FaImage } from 'react-icons/fa';
 import moment from 'moment';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
+import Modal from '@/components/Modal';
 import { API_URL } from '@/config/index';
 
 // TODO: Use Formik
@@ -48,6 +49,8 @@ export default function EditEventPage({ evt }) {
     setValues({ ...values, [name]: value });
   };
 
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Layout title="Add New Event">
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
@@ -85,10 +88,15 @@ export default function EditEventPage({ evt }) {
       { imagePreview
         ? <Image src={imagePreview} height={100} width={100} alt="" /> : <p>No image uploaded</p> }
       <div>
-        <button type="button">
-          <FaImage /> Set Image
+        <button type="button" onClick={() => setShowModal(true)}>
+          <FaImage />
+          {' '}
+          Set Image
         </button>
       </div>
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <p>Image</p>
+      </Modal>
     </Layout>
 
   );
