@@ -7,8 +7,11 @@ import AuthContext from '@/context/AuthContext';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const [errorMessage, setErrorMessage] = useState('');
 
-  const { login, error } = useContext(AuthContext);
+  const { login, error, resetError } = useContext(AuthContext);
+  // console.log(error);
+  // useEffect(() => setErrorMessage(error), [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +37,12 @@ export default function LoginPage() {
             </label>
           </div>
           <input type="submit" value="Login" />
+          { error ? (
+            <>
+              <p>{error}</p>
+              <button type="button" onClick={() => resetError()}>Ok</button>
+            </>
+          ) : null}
         </form>
         <p>
           Don&apos;t have an account ?
