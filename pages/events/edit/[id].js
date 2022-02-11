@@ -94,7 +94,7 @@ export default function EditEventPage({ evt }) {
           Set Image
         </button>
       </div>
-      <Modal show={showModal} onClose={() => setShowModal(false)}>
+      <Modal show={showModal} onClose={() => setShowModal(false)} title="test">
         <p>Image</p>
       </Modal>
     </Layout>
