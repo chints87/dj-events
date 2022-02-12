@@ -36,12 +36,10 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" onClick={() => logout()}>
-                    <a>
-                      <FaSignOutAlt />
-                      Logout
-                    </a>
-                  </Link>
+                  <button type="button" onClick={() => logout()}>
+                    <FaSignOutAlt />
+                    Logout
+                  </button>
                 </li>
               </>
             ) : (

@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { register , error } = useContext(AuthContext);
+  const { register, error } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log('in here');

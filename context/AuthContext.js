@@ -1,5 +1,5 @@
-import { createContext, useState } from 'react';
-// import { useRouter } from 'next/router';
+import { createContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { NEXT_URL } from '@/config/index';
 
 const AuthContext = createContext();
@@ -7,6 +7,22 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setuser] = useState('');
   const [error, setError] = useState('');
+
+  const router = useRouter();
+
+  // Check if user is logged in
+  const checkUserLoggedIn = async () => {
+    const res = await fetch(`${NEXT_URL}/api/user`);
+    const data = await res.json();
+
+    if (res.ok) {
+      setuser(data.user);
+    } else {
+      setError(null);
+    }
+  };
+
+  useEffect(() => checkUserLoggedIn(), []);
 
   // Reset Error, with an event so that the
   // user has seen it
@@ -31,11 +47,9 @@ export const AuthProvider = ({ children }) => {
     });
 
     const data = await res.json();
-
-    console.log(data);
-
     if (res.ok) {
       setuser(data.user);
+      router.push('/account/dashboard');
     } else {
       setError(data.message);
       // setError(null);
@@ -44,12 +58,16 @@ export const AuthProvider = ({ children }) => {
 
   // Logout User
   const logout = async () => {
-    console.log('logout');
-  };
+    const res = await fetch(`${NEXT_URL}/api/logout`, {
+      method: 'POST',
+    });
 
-  // Check if user is logged in
-  const checkUserLoggedIn = async (credentials) => {
-    console.log('Check', credentials);
+    if (res.ok) {
+      setuser(null);
+      router.push('/');
+    } else {
+      setError('Something went wrong');
+    }
   };
 
   return (
