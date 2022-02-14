@@ -29,8 +29,23 @@ export const AuthProvider = ({ children }) => {
   const resetError = async () => setError(null);
 
   // Register User
-  const register = async (userDetails) => {
-    console.log(userDetails);
+  const register = async (newUser) => {
+    const res = await fetch(`${NEXT_URL}/api/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      setuser(data.user);
+      router.push('/account/dashboard');
+    } else {
+      setError(data.message);
+      // setError(null);
+    }
   };
   // Making a request to the API in next that will
   // further make a request to Strapi
