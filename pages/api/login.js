@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     const { identifier, password } = req.body;
 
     // This route is like a middleware for Strapi
-    // Fetch call to strapi
+    // Fetch call to strapi and the path is '/auth/local/'
     const strapiRes = await fetch(`${API_URL}/auth/local`, {
       method: 'POST',
       headers: {
