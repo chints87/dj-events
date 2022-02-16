@@ -6,9 +6,10 @@ import Image from 'next/image';
 import Layout from '@/components/Layout';
 import Modal from '@/components/Modal';
 import { API_URL } from '@/config/index';
+import { parseCookie } from '@/utilities/parseCookie';
 
 // TODO: Use Formik
-export default function EditEventPage({ evt }) {
+export default function EditEventPage({ evt, token }) {
   const [values, setValues] = useState({
     name: evt.name,
     venue: evt.venue,
@@ -32,12 +33,15 @@ export default function EditEventPage({ evt }) {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
 
     if (!res.ok) {
-      alert('Error');
+      if (res.status === 403 || res.status === 401) {
+        alert('You are not authorzied to modify this');
+      }
     } else {
       const event = await res.json();
       router.push(`/events/${event.slug}`);
@@ -102,13 +106,15 @@ export default function EditEventPage({ evt }) {
   );
 }
 
-export async function getServerSideProps({ params: { id } }) {
+export async function getServerSideProps({ req, params: { id } }) {
   const res = await fetch(`${API_URL}/events/${id}`);
   const event = await res.json();
+  const { token } = parseCookie(req);
 
   return {
     props: {
       evt: event,
+      token,
     },
   };
 }

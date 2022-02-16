@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { API_URL } from '@/config/index';
+import { parseCookie } from '@/utilities/parseCookie';
 
 // TODO: Use Formik
-export default function AddEventPage() {
+export default function AddEventPage({ token }) {
   const [values, setValues] = useState({
     name: '',
     venue: '',
@@ -18,17 +19,23 @@ export default function AddEventPage() {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
+    // If there is no authorization header then
+    // the default role is public role
     e.preventDefault();
-    console.log(values);
     const res = await fetch(`${API_URL}/events`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
 
     if (!res.ok) {
+      if (res.status === 403 || res.status === 401) {
+        alert('You need to be signed in to add an event');
+        return;
+      }
       alert('Error');
     } else {
       const event = await res.json();
@@ -76,4 +83,14 @@ export default function AddEventPage() {
       </form>
     </Layout>
   );
+}
+
+// Destructuring req from context
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookie(req);
+  return {
+    props: {
+      token,
+    },
+  };
 }
