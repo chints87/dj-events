@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaPencilAlt, FaTimes } from 'react-icons/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import EventMap from '@/components/EventMap';
 import Layout from '@/components/Layout';
 import { API_URL } from '@/config/index';
 
@@ -32,6 +32,7 @@ export default function Eventpage({ evt }) {
     <Layout>
       <h1>{evt.slug}</h1>
       <p>Other event info</p>
+      <EventMap evt={evt} />
       <Link href="/events">
         <a>Go back</a>
       </Link>
