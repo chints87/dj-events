@@ -33,6 +33,7 @@ export default function Eventpage({ evt }) {
       <h1>{evt.slug}</h1>
       <p>Other event info</p>
       <EventMap evt={evt} />
+      <p>Test</p>
       <Link href="/events">
         <a>Go back</a>
       </Link>

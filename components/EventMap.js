@@ -1,49 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import ReactMapGL, { Marker } from 'react-map-gl';
+// import Image from 'next/image';
+import ReactMapGl, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Geocode from 'react-geocode';
 
 export default function EventMap({ evt }) {
-  const [latitude, setLat] = useState(null);
-  const [longitude, setLng] = useState(null);
+  const [lat, setLat] = useState(40.712772);
+  const [lng, setLng] = useState(-73.935242);
   const [loading, setLoading] = useState(true);
-
   const [viewport, setViewport] = useState({
-    latitude: 37.7577,
-    longitude: -73.93,
+    latitude: lat,
+    longitude: lng,
     width: '100%',
     height: '500px',
-    zoom: 8,
+    zoom: 10,
   });
 
+  // Although the value of lng changes at setLng, as seen in line 34, in line 26 the lng value
+  // is the initial value
   useEffect(() => {
-    Geocode.fromAddress(evt.address).then(
-      (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        setLat(lat);
-        setLng(lng);
-        setViewport({ ...viewport, latitude: lat, longitude: lng });
-        setLoading(false);
-      },
-      (error) => {
-        console.error(error);
-      },
-    );
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${evt.address}.json?&access_token=${process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}`, {
+      method: 'GET',
+    }).then((res) => res.json()).then((data) => {
+      const { coordinates } = data.features[0].geometry;
+      setLat(coordinates[1]);
+      setLng(coordinates[0]);
+      console.log('lng', lng);
+      setViewport({ ...viewport, latitude: coordinates[1], longitude: coordinates[0] });
+      setLoading(false);
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY);
-
   if (loading) {
+    console.log(lng, viewport);
     return false;
   }
 
-  console.log(latitude, longitude);
+  console.log(viewport);
 
   return (
-    <div>
-      MAP
-    </div>
+    <ReactMapGl
+      {...viewport}
+      mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+      onViewportChange={(vp) => setViewport(vp)}
+    >
+      <Marker key={evt.id} latitude={lat} longitude={lng}>
+        Hello
+      </Marker>
+    </ReactMapGl>
   );
 }
