@@ -23,15 +23,13 @@ export default function HomePage({ events }) {
 // getServerSideProps sends a request to fetch data whenever
 // navigated or reloaded to the page containing it
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`);
   const events = await res.json();
-
   return {
     props: { events },
     // Over here since getStateProps the props are received
     // only at built time, any updates made to the event will
     // need to be seen and for that revalidate is used.
-    revalidate: 1,
   };
 }
