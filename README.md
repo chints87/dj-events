@@ -15,7 +15,7 @@ export const NEXT_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhos
 
 ```
 
-### Using [Strapi] (https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html) a Headless CMS service for data storage
+### Using [Strapi](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html) a Headless CMS service for data storage
 
 1) In order to setup strapi, in the project folder
 ```
@@ -80,7 +80,17 @@ npm run develop
 2) Ensure the path to be in the format `${API_URL}/api/surveys?[filters][projectArea][$contains]=${term}`, 
    where projectArea is the field in the surveys collection and $contains is an operator
 
-3) The term parameter is extracted from the context object.    
+3) The term parameter is extracted from the context object. 
 
+## CRUD operation for a collection 
 
+1) In the *pages* folder, create a folder named collection
+2) Create an index.js file
+3) Fetch data from backend collection-type and display that data in the index.js file.
+4) In that folder, create a add.js file. 
+5) In the add.js, create a form to get information and then post to the collection-type in the backend to create a record 
+6) Create [id].js file. Over here, all details for a record can be displayed here. 
+7) Add a delete and edit option in this file
+8) Create an edit folder and in that create an [id].js file
+9) In the [id].js folder here, add a form that populates fields with existing record
 
