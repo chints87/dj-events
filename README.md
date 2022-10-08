@@ -1,34 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Developing CRUD application with Next.JS and Strapi
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+### Installation
+Clone the Github repository from the following steps:
+```
+$git@github.com:chints87/ecommerce.git *name of folder*
+$cd *name of folder*
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1) Refer to [NextJS starter repository](https://github.com/chints87/Next-JS-starter-file.git) for initial setup.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+2) Create a config folder and create an index.js file to refer the absolute path to fetch data from API.
+```
+export const NEXT_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Using [Strapi] (https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html) a Headless CMS service for data storage
 
-## Learn More
+1) In order to setup strapi, in the project folder
+```
+npx create-strapi-app *name of folder*
+```
 
-To learn more about Next.js, take a look at the following resources:
+2) Select the quickstart option to complete installation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3) Once installed, the service starts running and take the browser to a page with localhost:1337 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4) Over here, set up your account as a admin user
 
-## Deploy on Vercel
+To start the application running again use the following commad
+```
+npm run develop
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Create a collection 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1) In the *Plugins* section, go to Content-type-builder.
+
+2) Click *Create a new collection type*.
+
+3) Give the collection name, and corresponding api endpoints will be created. 
+
+4) Add the fields that make up the collection.
+
+5) Once all fields are entered, click *Save* and wait for server to restart.
+
+6) In the *Content-Manager* the collection type should be displayed and entries within it.
+
+7) To add a record, select the *Collection* created and click on *Create new entry* button.
+
+8) Upon adding the field values, click *Save* and then *Publish* to create a record in the collection. 
+
+## Test api endpoint
+
+1) In the *General* section go to *Settings*.
+
+2) In *Users and Permissions*, click on *Roles* and then *Public*.
+
+3) Click on the *Collection* created, and check on **Select all**
+
+4) Open a new tab and type **'localhost:1337/api/*collection*'**, and you should see data recently
+   published in the collection.
+
+
+## Search Component
+
+1) Create a form that takes in user input 
+
+2) Upon submitting the form, the router pushes the application to the search page with
+   the respective data obtained from the backend w.r.t the search term. 
+
+   ```
+    router.push(`/search?term=${term}`);
+   ``` 
+## Query parameters for Search (front-end)
+
+1) Create a Search page in the pages folder
+
+2) Ensure the path to be in the format `${API_URL}/api/surveys?[filters][projectArea][$contains]=${term}`, 
+   where projectArea is the field in the surveys collection and $contains is an operator
+
+3) The term parameter is extracted from the context object.    
+
+
+
